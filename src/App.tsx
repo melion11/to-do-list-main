@@ -7,7 +7,7 @@ function App() {
     const tasks: TaskType[] = [
         {id: 1, title: 'HTML&CSS', isDone: true},
         {id: 2, title: 'JS/ES6/TS', isDone: true},
-        {id: 3, title: 'React', isDone: false},
+        {id: 3, title: 'React/Redux', isDone: false},
     ]
 
     return (
