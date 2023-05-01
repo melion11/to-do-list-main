@@ -7,7 +7,7 @@ function App() {
     const title = 'What to learn';
 
     const tasks: TaskType[] = [
-        {id: 1, title: 'HTML&CSS', isDone: true},
+        {id: 1, title: ' HTML&CSS ', isDone: true},
         {id: 2, title: 'JS/ES6/TS', isDone: true},
         {id: 3, title: 'React/Redux', isDone: false},
     ]
