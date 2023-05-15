@@ -7,6 +7,7 @@ import {TasksList} from './TasksList';
 export type TodoListPropsType = {
     title: string
     tasks: Array<TaskType>
+    changeStatus: ()=>void
 }
 
 export type TaskType = {
