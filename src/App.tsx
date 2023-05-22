@@ -49,7 +49,7 @@ function App() {
     return (
         <div className="App">
             <Todolist
-                title="What to learn"
+                title="What to learning"
                 tasks={tasksForTodolist}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
