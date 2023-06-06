@@ -3,6 +3,9 @@ import {FilterValuesType} from './App';
 import s from './Todolist.module.css'
 import {AddForm} from './Components/AddForm';
 import {EditableSpan} from './Components/EditableSpan';
+import {Button,  IconButton} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Checkbox from '@mui/material/Checkbox';
 
 export  type TaskType = {
     id: string
@@ -68,27 +71,30 @@ export function Todolist(props: PropsType) {
 
 
                     return <li key={t.id} className={t.isDone ? s.isDone : ''}>
-                        <input type="checkbox" checked={t.isDone}
+                        <Checkbox  checked={t.isDone}
                                onChange={(e: ChangeEvent<HTMLInputElement>) => changeStatusHandler(t.id, e.currentTarget.checked)}/>
                         <EditableSpan callBack={(updateTitle)=>editTaskHandler(t.id,updateTitle)} title={t.title}/>
-                        <button onClick={onClickHandler}>x</button>
+                        <IconButton onClick={onClickHandler} aria-label="delete"><DeleteIcon /></IconButton>
                     </li>
                 })
             }
         </ul>
         <div>
-            <button className={buttonName === 'all' ? s.activeFilter : ''} onClick={() => {
+            <Button variant={buttonName === 'all' ? 'contained' : 'outlined'} color={'primary'}
+                    onClick={() => {
                 onChangeFilter(props.todolistId, 'all')
             }}>All
-            </button>
-            <button className={buttonName === 'active' ? s.activeFilter : ''} onClick={() => {
+            </Button>
+            <Button variant={buttonName === 'active' ? 'contained' : 'outlined'} color={'secondary'}
+                    onClick={() => {
                 onChangeFilter(props.todolistId, 'active')
             }}>Active
-            </button>
-            <button className={buttonName === 'completed' ? s.activeFilter : ''} onClick={() => {
+            </Button>
+            <Button variant={buttonName === 'completed' ? 'contained' : 'outlined'} color={'success'}
+                    onClick={() => {
                 onChangeFilter(props.todolistId, 'completed')
             }}>Completed
-            </button>
+            </Button>
         </div>
     </div>
 }
