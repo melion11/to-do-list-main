@@ -6,6 +6,10 @@ import {EditableSpan} from './EditableSpan'
 import {Task} from './Task'
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
+import {TaskWithRedux} from './TaskWithRedux';
+import {useSelector} from 'react-redux';
+import {AppRootStateType} from './state/store';
+import {TasksStateType} from './AppWithRedux';
 
 export type TaskType = {
     id: string
@@ -16,7 +20,6 @@ export type TaskType = {
 type PropsType = {
     id: string
     title: string
-    tasks: Array<TaskType>
     changeFilter: (value: FilterValuesType, todolistId: string) => void
     addTask: (title: string, todolistId: string) => void
     changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
@@ -29,6 +32,8 @@ type PropsType = {
 }
 
 export const Todolist = React.memo(function (props: PropsType) {
+
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)[props.id]
 
     const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
@@ -45,13 +50,13 @@ export const Todolist = React.memo(function (props: PropsType) {
     const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.id), [props.changeFilter, props.id])
     const onCompletedClickHandler = useCallback(() => props.changeFilter('completed', props.id), [props.changeFilter, props.id])
 
-    let tasksForTodolist = props.tasks
+    let tasksForTodolist = tasks
 
     if (props.filter === 'active') {
-        tasksForTodolist = props.tasks.filter(t => t.isDone === false)
+        tasksForTodolist = tasks.filter(t => t.isDone === false)
     }
     if (props.filter === 'completed') {
-        tasksForTodolist = props.tasks.filter(t => t.isDone === true)
+        tasksForTodolist = tasks.filter(t => t.isDone === true)
     }
 
     return <div>
@@ -63,11 +68,8 @@ export const Todolist = React.memo(function (props: PropsType) {
         <AddItemForm addItem={addTask}/>
         <div>
             {
-                tasksForTodolist.map(t => <Task
+                tasksForTodolist.map(t => <TaskWithRedux
                     task={t}
-                    changeTaskStatus={props.changeTaskStatus}
-                    changeTaskTitle={props.changeTaskTitle}
-                    removeTask={props.removeTask}
                     todolistId={props.id}
                     key={t.id}
                 />)

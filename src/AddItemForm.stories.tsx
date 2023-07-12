@@ -1,17 +1,42 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import {action} from '@storybook/addon-actions'
+
+import {AddItemForm, AddItemFormPropsType} from './AddItemForm';
 import TextField from '@mui/material/TextField/TextField';
+import {IconButton} from '@mui/material';
+import {AddBox} from '@mui/icons-material';
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {IconButton} from "@mui/material";
-import {AddBox} from "@mui/icons-material";
 
 
-export type AddItemFormPropsType = {
-    addItem: (title: string) => void
-}
+const meta: Meta<typeof AddItemForm> = {
+    title: 'Todolists/AddItemForm',
+    component: AddItemForm,
+    tags: ['autodocs'],
+    argTypes: {
+        addItem: {
+            description: 'button clicked inside form',
+            action: 'clicked'
+        }
+    },
 
-export const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
-    console.log('additemform')
+
+};
+
+export default meta;
+type Story = StoryObj<typeof AddItemForm>;
+
+
+export const BaseAddItemFormExample: Story = {
+
+    args: {
+      // addItem: action('button clicked inside form')
+    },
+};
+
+
+export const ErrorExample = (props: AddItemFormPropsType) => {
     let [title, setTitle] = useState("")
-    let [error, setError] = useState<string | null>(null)
+    let [error, setError] = useState<string | null>("Title is required")
 
     const addItem = () => {
         if (title.trim() !== "") {
@@ -48,4 +73,14 @@ export const AddItemForm = React.memo( (props: AddItemFormPropsType) => {
             <AddBox />
         </IconButton>
     </div>
-} );
+}
+
+
+
+// export const AddItemFormWithErrorExample: Story = {
+//   render:(args) => {
+//       return <ErrorExample {...args}/>
+//   }
+// };
+
+
